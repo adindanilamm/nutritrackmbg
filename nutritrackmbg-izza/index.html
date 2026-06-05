@@ -3,83 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-  <title>NutriTrack MBG — Aplikasi Gabungan</title>
-  <style>
-    :root{
-      --navy:#0e214d; --navy-2:#1e3a5f; --green:#10b981; --green-h:#059669;
-      --bg:#f8fafc; --line:rgba(255,255,255,.14); --txt:#e8eef7; --muted:#9fb1cc;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);display:flex;flex-direction:column;height:100vh;overflow:hidden}
-
-    /* ===== Header / Menu Gabungan ===== */
-    .shell-header{background:linear-gradient(100deg,var(--navy),var(--navy-2));color:var(--txt);box-shadow:0 2px 14px rgba(14,33,77,.25);z-index:10}
-    .shell-bar{display:flex;align-items:center;gap:20px;padding:0 22px;height:60px;max-width:1500px;margin:0 auto}
-    .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.3px;white-space:nowrap}
-    .brand .dot{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--green);align-items:center;justify-content:center;color:#06281d}
-    .brand span{color:var(--green)}
-    .shell-nav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
-    .shell-nav::-webkit-scrollbar{display:none}
-    .nav-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border:0;background:transparent;color:var(--muted);font-size:13.5px;font-weight:600;border-radius:9px;cursor:pointer;white-space:nowrap;transition:.18s;font-family:inherit}
-    .nav-btn svg{width:17px;height:17px;flex:none}
-    .nav-btn:hover{background:rgba(255,255,255,.07);color:#fff}
-    .nav-btn.active{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(16,185,129,.35)}
-    .owner-tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.12);color:#cfe0f5;margin-left:2px}
-    .nav-btn.active .owner-tag{background:rgba(255,255,255,.25);color:#fff}
-
-    /* ===== Konten ===== */
-    .shell-main{flex:1;position:relative;background:var(--bg)}
-    #content-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
-    .loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;gap:10px;pointer-events:none;opacity:0;transition:.2s}
-    .loader.show{opacity:1}
-    .spin{width:18px;height:18px;border:2.5px solid #cbd5e1;border-top-color:var(--green);border-radius:50%;animation:sp .7s linear infinite}
-    @keyframes sp{to{transform:rotate(360deg)}}
-
-    @media(max-width:720px){
-      .shell-bar{height:auto;flex-direction:column;align-items:stretch;padding:10px}
-      .brand{justify-content:center;margin-bottom:4px}
-      .owner-tag{display:none}
-    }
-  </style>
-</head>
-<body>
-  <header class="shell-header">
-    <div class="shell-bar">
-      <div class="brand"><span class="dot">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      </span>NutriTrack<span>MBG</span></div>
-
-      <nav class="shell-nav" id="shellNav">
-        <!-- 4 halaman versi TSABITA -->
-        <button class="nav-btn" data-app="tsabita" data-page="dashboard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-          Dashboard</button>
-        <button class="nav-btn" data-app="tsabita" data-page="statistik">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
-          Statistik Gizi</button>
-        <button class="nav-btn" data-app="tsabita" data-page="makanan">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-          Data Makanan</button>
-        <button class="nav-btn" data-app="tsabita" data-page="simulasi">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Simulasi Menu</button>
-
-        <!-- 4 halaman versi IZZA -->
-        <button class="nav-btn" data-app="izza" data-page="lokasi">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Lokasi SPPG</button>
-        <button class="nav-btn" data-app="izza" data-page="laporan">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Laporan</button>
-        <button class="nav-btn" data-app="izza" data-page="edukasi">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5v-15z"/></svg>
-          Edukasi</button>
-        <button class="nav-btn" data-app="izza" data-page="pusatdata">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-          Pusat Data</button>
-=======
   <title>NutriTrack MBG - Visualisasi Data Program Makan Bergizi Gratis</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -132,40 +55,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
           Pusat Data
         </div>
-
->>>>>>> 3b55647963a125a9cdb6dad445ba7db77a25978a
+        <div class="nav-item" data-tab="login">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13 12H3"/></svg>
+          Masuk / Login
+        </div>
       </nav>
     </div>
   </header>
 
-<<<<<<< HEAD
-  <main class="shell-main">
-    <iframe id="content-frame" title="Konten NutriTrack MBG"></iframe>
-    <div class="loader" id="loader"><span class="spin"></span> Memuat halaman…</div>
-  </main>
-
-  <script>
-    const frame  = document.getElementById('content-frame');
-    const loader = document.getElementById('loader');
-    const nav    = document.getElementById('shellNav');
-    const buttons = [...nav.querySelectorAll('.nav-btn')];
-
-    function open(btn){
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const app  = btn.dataset.app;
-      const page = btn.dataset.page;
-      loader.classList.add('show');
-      frame.src = `apps/${app}/index.html#${page}`;
-    }
-
-    buttons.forEach(b => b.addEventListener('click', () => open(b)));
-    frame.addEventListener('load', () => loader.classList.remove('show'));
-
-    // Halaman default: Dashboard (versi Tsabita)
-    open(buttons[0]);
-  </script>
-=======
   <!-- Main Content Wrapper -->
   <main class="app-main" id="main-container">
 
@@ -337,42 +234,37 @@
 
       <!-- Summary Stats Row -->
       <div class="pd-summary-grid">
-        <!-- Total Masuk: document icon, grey -->
         <div class="pd-summary-card">
-          <div class="pd-stat-icon" style="color: #64748b;">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <div class="card-icon-wrapper" style="background-color: #f1f5f9; color: #475569;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
           <span class="card-value" id="pd-stat-total">128</span>
           <span class="card-label">Total Masuk</span>
         </div>
-        <!-- Menunggu: clock circle, yellow border -->
         <div class="pd-summary-card">
-          <div class="pd-stat-icon" style="color: #f59e0b;">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="card-icon-wrapper" style="background-color: #fef7e0; color: #b06000;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <span class="card-value" id="pd-stat-menunggu">12</span>
           <span class="card-label">Menunggu</span>
         </div>
-        <!-- Data Valid: check circle, green -->
         <div class="pd-summary-card">
-          <div class="pd-stat-icon" style="color: #16a34a;">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+          <div class="card-icon-wrapper" style="background-color: #e6f4ea; color: #137333;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <span class="card-value" id="pd-stat-valid">94</span>
           <span class="card-label">Data Valid</span>
         </div>
-        <!-- Perlu Perbaikan: alert circle, orange -->
         <div class="pd-summary-card">
-          <div class="pd-stat-icon" style="color: #f97316;">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="card-icon-wrapper" style="background-color: #fef7e0; color: #b06000;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </div>
           <span class="card-value" id="pd-stat-perbaikan">18</span>
           <span class="card-label">Perlu Perbaikan</span>
         </div>
-        <!-- Ditolak: alert circle, red -->
         <div class="pd-summary-card">
-          <div class="pd-stat-icon" style="color: #ef4444;">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="card-icon-wrapper" style="background-color: #fce8e6; color: #c5221f;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </div>
           <span class="card-value" id="pd-stat-ditolak">4</span>
           <span class="card-label">Ditolak</span>
@@ -498,6 +390,40 @@
         <button class="btn btn-primary" onclick="alert('Memulai simulator menu...')">Buka Simulator Menu</button>
       </div>
     </div>
+
+    <!-- View: Login Form -->
+    <div id="view-login" class="view-panel" style="display: none;">
+      <div class="login-view-wrapper">
+        <div class="login-card">
+          <div class="login-logo">
+            NutriTrack<span>MBG</span>
+          </div>
+          <p class="login-header-desc">Masuk untuk mengakses dasbor admin dan manajemen data.</p>
+          
+          <form id="login-form" onsubmit="event.preventDefault(); alert('Login berhasil!');">
+            <div class="form-group">
+              <label class="form-label" for="login-email">Alamat Email</label>
+              <input type="email" id="login-email" class="form-input" placeholder="admin@nutritrack.go.id" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="login-password">Kata Sandi</label>
+              <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; height: 46px; margin-top: 10px;">Masuk ke Akun</button>
+          </form>
+          
+          <div class="login-divider">
+            <span>atau</span>
+          </div>
+          
+          <button class="btn btn-secondary" style="width: 100%; gap: 10px;" onclick="alert('Menghubungkan dengan SSO Single Sign-On...')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Masuk dengan Akun Pegawai
+          </button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- App Footer -->
@@ -657,6 +583,5 @@
 
   <!-- JavaScript -->
   <script src="app.js"></script>
->>>>>>> 3b55647963a125a9cdb6dad445ba7db77a25978a
 </body>
 </html>
