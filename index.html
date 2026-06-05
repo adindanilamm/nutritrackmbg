@@ -93,17 +93,40 @@
     const nav    = document.getElementById('shellNav');
     const buttons = [...nav.querySelectorAll('.nav-btn')];
 
+    let currentApp = null;     // aplikasi yang sedang termuat di iframe
+    let safety = null;         // pengaman: paksa sembunyikan loader
+
+    function hideLoader(){ loader.classList.remove('show'); if(safety){clearTimeout(safety); safety=null;} }
+    function showLoader(){
+      loader.classList.add('show');
+      if(safety) clearTimeout(safety);
+      safety = setTimeout(hideLoader, 4000); // paksa hilang maks 4 detik
+    }
+
     function open(btn){
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const app  = btn.dataset.app;
       const page = btn.dataset.page;
-      loader.classList.add('show');
-      frame.src = `apps/${app}/index.html#${page}`;
+
+      if (app === currentApp) {
+        // Aplikasi sama -> cukup ganti hash, tidak perlu reload & tidak perlu spinner
+        try {
+          frame.contentWindow.location.hash = page;
+        } catch (e) {
+          frame.src = `apps/${app}/index.html#${page}`; // fallback aman
+        }
+        hideLoader();
+      } else {
+        // Pindah aplikasi -> muat ulang iframe
+        currentApp = app;
+        showLoader();
+        frame.src = `apps/${app}/index.html#${page}`;
+      }
     }
 
     buttons.forEach(b => b.addEventListener('click', () => open(b)));
-    frame.addEventListener('load', () => loader.classList.remove('show'));
+    frame.addEventListener('load', hideLoader);
 
     // Halaman default: Dashboard (versi Tsabita)
     open(buttons[0]);
