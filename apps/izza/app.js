@@ -79,7 +79,7 @@ function getStoredData(key, fallback) {
 }
 
 // State
-let sppgLocations = getStoredData(STORAGE_KEYS.SPPG, defaultSppgLocations);
+let sppgLocations = (window.NT_SPPG && window.NT_SPPG.length) ? window.NT_SPPG : getStoredData(STORAGE_KEYS.SPPG, defaultSppgLocations);
 let reports = getStoredData(STORAGE_KEYS.LAPORAN, defaultReports);
 let datasets = getStoredData(STORAGE_KEYS.DATASETS, defaultDatasets);
 
@@ -273,16 +273,16 @@ function renderSppgGrid(searchQuery = '') {
       
       <div class="sp-details-list">
         <div class="sp-detail-row">
-          <span class="sp-detail-label">Kapasitas Maksimal</span>
-          <span class="sp-detail-val">${loc.maxCapacity.toLocaleString()} Porsi</span>
+          <span class="sp-detail-label">Kabupaten/Kota</span>
+          <span class="sp-detail-val">${loc.city || '-'}</span>
         </div>
         <div class="sp-detail-row">
-          <span class="sp-detail-label">Porsi Aktif</span>
-          <span class="sp-detail-val">${loc.activePortions.toLocaleString()} Porsi</span>
+          <span class="sp-detail-label">Kecamatan</span>
+          <span class="sp-detail-val">${loc.district || '-'}</span>
         </div>
         <div class="sp-detail-row">
-          <span class="sp-detail-label">Tenaga Koki</span>
-          <span class="sp-detail-val">${loc.chefCount.toLocaleString()} Orang</span>
+          <span class="sp-detail-label">Alamat</span>
+          <span class="sp-detail-val" style="text-align:right; max-width:60%;">${loc.address || (loc.maxCapacity != null ? loc.maxCapacity.toLocaleString() + ' Porsi' : '-')}</span>
         </div>
       </div>
     `;

@@ -774,16 +774,45 @@ function saveSimulatedMenu() {
     document.head.appendChild(style);
   }
 
-  setTimeout(() => {
+  // Hitung total kalori & protein dari item terpilih (per 100 g)
+  let totalCalories = 0, totalProtein = 0;
+  simulatorState.selectedItems.forEach(item => {
+    const food = (window.FoodDatabase || []).find(f => f.id === item.foodId);
+    if (food) {
+      const factor = (item.qtyGrams || 0) / 100;
+      totalCalories += (food.calories || 0) * factor;
+      totalProtein  += (food.protein  || 0) * factor;
+    }
+  });
+
+  // Simpan ke database lewat API PHP
+  fetch((window.NT_API || '../../api') + '/simulations.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: 'Menu Simulasi MBG',
+      items: simulatorState.selectedItems,
+      total_calories: Math.round(totalCalories),
+      total_protein: Math.round(totalProtein * 10) / 10
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
     saveBtn.disabled = false;
     saveBtn.innerHTML = originalHTML;
-    
-    triggerToast("Kombinasi menu Makan Bergizi Gratis berhasil disimpan!", "success");
-    
-    // Clear simulator
-    simulatorState.selectedItems = [];
-    renderSelectedSimulatorMenu();
-  }, 1200);
+    if (res && res.ok) {
+      triggerToast("Kombinasi menu berhasil disimpan ke database! (ID #" + res.id + ")", "success");
+      simulatorState.selectedItems = [];
+      renderSelectedSimulatorMenu();
+    } else {
+      triggerToast("Gagal menyimpan: " + (res && res.error ? res.error : "kesalahan server"), "info");
+    }
+  })
+  .catch(err => {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = originalHTML;
+    triggerToast("Gagal terhubung ke server database.", "info");
+  });
 }
 
 function exportSimulatedReport() {

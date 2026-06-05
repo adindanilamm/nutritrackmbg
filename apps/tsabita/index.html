@@ -533,20 +533,35 @@
   <!-- Toast Alert Container -->
   <div id="toast-root-container" class="toast-container"></div>
 
-  <!-- Application Logic & Data Modules -->
-  <script src="data.js"></script>
-  <script src="app.js"></script>
-
-  <!-- HOOK GABUNGAN: sembunyikan header sendiri & navigasi dari menu induk -->
+  <!-- Sembunyikan header/footer sendiri (menu disediakan halaman induk) -->
   <style>.app-header{display:none !important;} .app-footer{display:none !important;}</style>
+
+  <!-- Application Logic & Data Modules -->
+  <!-- 1) Loader data (mengambil dari API/MySQL)  2) app.js dimuat SETELAH data siap -->
+  <script src="data.js"></script>
   <script>
-    window.addEventListener('load', function () {
-      function go() {
-        var v = (location.hash || '#dashboard').replace('#','');
-        if (typeof navigateTo === 'function') navigateTo(v);
-      }
-      go();
-      window.addEventListener('hashchange', go);
+    NT_loadData().then(function () {
+      var s = document.createElement('script');
+      s.src = 'app.js';
+      s.onload = function () {
+        // Jalankan inisialisasi app.js (default dashboard) dengan data yang sudah siap
+        document.dispatchEvent(new Event('DOMContentLoaded'));
+        // Lalu navigasi ke halaman sesuai hash dari menu induk
+        function go() {
+          var v = (location.hash || '#dashboard').replace('#', '');
+          if (typeof navigateTo === 'function') navigateTo(v);
+        }
+        go();
+        window.addEventListener('hashchange', go);
+      };
+      document.body.appendChild(s);
+    }).catch(function (e) {
+      document.body.innerHTML =
+        '<div style="padding:40px;font-family:sans-serif;color:#b91c1c;line-height:1.6">' +
+        '<b>Gagal memuat data dari database.</b><br>' +
+        'Pastikan MySQL Laragon menyala dan database <code>nutritrackmbg</code> sudah diimpor, ' +
+        'lalu buka project lewat Apache (mis. http://localhost/nutritrackmbg-main/).<br><br>' +
+        'Detail: ' + e + '</div>';
     });
   </script>
 </body>
